@@ -23,6 +23,7 @@ idna==2.8                 # via requests
 ipython-genutils==0.2.0   # via traitlets
 ipython==7.3.0
 jedi==0.13.2              # via ipython
+jsonfield==2.0.2
 parso==0.3.4              # via jedi
 pickleshare==0.7.5        # via ipython
 pillow==5.4.1             # via wagtail

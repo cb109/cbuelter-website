@@ -119,6 +119,7 @@ def main(input_filepath):
             first_published_at=date,
             last_published_at=date,
             latest_revision_created_at=date,
+            _original_wp_post=post,
         )
 
         # TODO:

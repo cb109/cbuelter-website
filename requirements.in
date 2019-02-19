@@ -2,10 +2,11 @@
 # $ pip-compile > requirements.txt
 # $ pip-sync
 
-# production
+# Production
 dateutils
 Django>=2.1,<2.2
+jsonfield
 wagtail>=2.4,<2.5
 
-# development
+# Development
 ipython
