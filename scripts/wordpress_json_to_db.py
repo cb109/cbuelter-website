@@ -15,6 +15,15 @@ import sys
 from datetime import datetime
 from time import mktime
 
+import dateutil.parser
+from django.conf import settings
+from django.db import transaction
+from django.utils import timezone
+from django.utils.text import slugify
+
+from home.models import HomePage
+from home.models import BlogPostPage
+
 
 def make_timestamp_from_datetime(datetime_object):
     return int(mktime(datetime_object.timetuple()))
@@ -87,15 +96,39 @@ def wordpress_xml_dict_to_posts(document):
     return posts
 
 
-def main():
-    input_filepath = sys.argv[1]
+@transaction.atomic()
+def main(input_filepath):
     with open(input_filepath) as f:
         document = json.loads(f.read())
 
+    homepage = HomePage.objects.last()
+
     posts = wordpress_xml_dict_to_posts(document)
-    with open("posts.json", "w") as f:
-        f.write(json.dumps(posts, indent=2))
+    for post in posts:
+        title = post["title"]
+        slug = post["name"]
+        date = timezone.make_aware(
+            dateutil.parser.parse(post["date"])
+        )
+
+        if not slug:
+            slug = slugify(title)
+        blogpost = BlogPostPage(
+            title=title,
+            slug=slug,
+            body=post["content"],
+            first_published_at=date,
+            last_published_at=date,
+            latest_revision_created_at=date,
+        )
+
+        # Ensure things like .depth and .path are set correctly.
+        homepage.add_child(instance=blogpost)
+        blogpost.save()
+
+        print(blogpost.id)
 
 
 if __name__ == "__main__":
-    main()
+    input_filepath = sys.argv[1]
+    main(input_filepath)
