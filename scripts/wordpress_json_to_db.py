@@ -16,7 +16,6 @@ from datetime import datetime
 from time import mktime
 
 import dateutil.parser
-from django.conf import settings
 from django.db import transaction
 from django.utils import timezone
 from django.utils.text import slugify
@@ -121,6 +120,13 @@ def main(input_filepath):
             last_published_at=date,
             latest_revision_created_at=date,
         )
+
+        # TODO:
+        # - [ ] store original json temp. into each post so we can iterate
+        # - [ ] separate content by parser and migrate into StreamField blocks
+        # - [ ] migrate drafts as drafts, not published
+        # - [ ] migrate categories / tags
+        # - [ ] add simple blog-list and blog-detail templates
 
         # Ensure things like .depth and .path are set correctly.
         homepage.add_child(instance=blogpost)
