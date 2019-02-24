@@ -565,3 +565,62 @@ label, legend, fieldset {
 .pl-5 {
   padding-left: 48px !important;
 }
+
+/**
+ * Custom CSS
+ */
+html {
+  font-family: "Poppins", Helvetica, Roboto, Arial, sans-serif;
+}
+
+.dbg {
+  outline: 1px solid red;
+}
+
+.dbg * {
+  outline: 1px solid red;
+}
+
+.unstyled-list {
+  list-style-type: none;
+}
+
+.primary-color {
+  color: #EF476F;
+}
+
+/** Blost Posts */
+
+.blog-year-header {
+  color: #E0E0E0;
+  text-align: center;
+}
+
+.blogpost-row {
+  display: flex;
+}
+
+.blogpost-date {
+  width: 130px;
+  text-align: end;
+  flex-shrink: 0;
+}
+
+.blogpost-link:hover {
+  border-bottom: none;
+  text-decoration: underline;
+}
+
+@media only screen and (max-width: 960px) {
+  .blog-year-header {
+    text-align: start;
+  }
+
+  .blogpost-row {
+    flex-direction: column;
+  }
+
+  .blogpost-date {
+    text-align: start;
+  }
+}
