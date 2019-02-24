@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from jsonfield import JSONField
 
 from wagtail.admin.edit_handlers import FieldPanel
@@ -8,6 +10,7 @@ from wagtail.core.models import Page
 class HomePage(Page):
     """The parent of all other Pages."""
 
+    @property
     def blogposts(self):
         return (
             BlogPostPage.objects
@@ -16,6 +19,14 @@ class HomePage(Page):
             .public()
             .order_by("-first_published_at")
         )
+
+    @property
+    def blogposts_grouped_by_year(self):
+        year_to_posts = defaultdict(list)
+        for blogpost in self.blogposts:
+            post_year = blogpost.first_published_at.year
+            year_to_posts[post_year].append(blogpost)
+        return year_to_posts.items()
 
 
 class BlogPostPage(Page):
