@@ -109,6 +109,7 @@ def main(input_filepath):
         date = timezone.make_aware(
             dateutil.parser.parse(post["date"])
         )
+        is_published = post["status"] == "publish"
 
         if not slug:
             slug = slugify(title)
@@ -119,11 +120,12 @@ def main(input_filepath):
             first_published_at=date,
             last_published_at=date,
             latest_revision_created_at=date,
+            live=is_published,
             _original_wp_post=post,
         )
 
         # TODO:
-        # - [ ] store original json temp. into each post so we can iterate
+        # - [x] store original json temp. into each post so we can iterate
         # - [ ] separate content by parser and migrate into StreamField blocks
         # - [ ] migrate drafts as drafts, not published
         # - [ ] migrate categories / tags
