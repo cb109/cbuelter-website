@@ -581,15 +581,15 @@ html {
   outline: 1px solid red;
 }
 
-.unstyled-list {
-  list-style-type: none;
-}
-
 .primary-color {
   color: #EF476F;
 }
 
-/** Blost Posts */
+/** Blog Posts */
+
+.blogposts-list {
+  list-style-type: none;
+}
 
 .blog-year-header {
   color: #E0E0E0;
@@ -614,10 +614,17 @@ html {
 @media only screen and (max-width: 960px) {
   .blog-year-header {
     text-align: start;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #E0E0E0;
+  }
+
+  .blogposts-list {
+    padding-left: 0;
   }
 
   .blogpost-row {
     flex-direction: column;
+    padding-bottom: 8px;
   }
 
   .blogpost-date {
