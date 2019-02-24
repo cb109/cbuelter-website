@@ -7,7 +7,15 @@ from wagtail.core.models import Page
 
 class HomePage(Page):
     """The parent of all other Pages."""
-    pass
+
+    def blogposts(self):
+        return (
+            BlogPostPage.objects
+            .child_of(self)
+            .live()
+            .public()
+            .order_by("-first_published_at")
+        )
 
 
 class BlogPostPage(Page):
