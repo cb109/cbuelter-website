@@ -15,13 +15,12 @@ import sys
 from datetime import datetime
 from time import mktime
 
-import dateutil.parser
 from django.db import transaction
 from django.utils import timezone
 from django.utils.text import slugify
 
-from home.models import HomePage
-from home.models import BlogPostPage
+import dateutil.parser
+from home.models import BlogPostPage, HomePage
 
 
 def make_timestamp_from_datetime(datetime_object):
@@ -80,18 +79,20 @@ def wordpress_xml_dict_to_posts(document):
         if post_type != "post":
             # an attachment might have the same "post_name" as an actual post.
             continue
-        posts.append({
-            "name": name,
-            "id": post["wp:post_id"],
-            "link": post["link"],
-            "title": post["title"],
-            "content": post["content:encoded"],
-            "date": post["wp:post_date"],
-            "timestamp": get_wordpress_timestamp(post["wp:post_date"]),
-            "comments": get_comments_from_post(post),
-            "metadata": get_metadata_from_post(post),
-            "status": post["wp:status"],
-        })
+        posts.append(
+            {
+                "name": name,
+                "id": post["wp:post_id"],
+                "link": post["link"],
+                "title": post["title"],
+                "content": post["content:encoded"],
+                "date": post["wp:post_date"],
+                "timestamp": get_wordpress_timestamp(post["wp:post_date"]),
+                "comments": get_comments_from_post(post),
+                "metadata": get_metadata_from_post(post),
+                "status": post["wp:status"],
+            }
+        )
     return posts
 
 
@@ -106,17 +107,15 @@ def main(input_filepath):
     for post in posts:
         title = post["title"]
         slug = post["name"]
-        date = timezone.make_aware(
-            dateutil.parser.parse(post["date"])
-        )
+        date = timezone.make_aware(dateutil.parser.parse(post["date"]))
         is_published = post["status"] == "publish"
 
         if not slug:
             slug = slugify(title)
+
         blogpost = BlogPostPage(
             title=title,
             slug=slug,
-            body=post["content"],
             first_published_at=date,
             last_published_at=date,
             latest_revision_created_at=date,
@@ -129,10 +128,37 @@ def main(input_filepath):
         # - [ ] separate content by parser and migrate into StreamField blocks
         # - [ ] migrate drafts as drafts, not published
         # - [ ] migrate categories / tags
-        # - [ ] add simple blog-list and blog-detail templates
+        # - [x] add simple blog-list and blog-detail templates
 
         # Ensure things like .depth and .path are set correctly.
         homepage.add_child(instance=blogpost)
+        blogpost.save()
+
+        # Separate code blocks from other paragraphs.
+        content = post["content"]
+        content_blocks = []
+        code_pattern_outter = "(\[code.*?\].+?\[\/code\])"
+        code_pattern_inner = "\[code.*?\](.+?)\[\/code\]"
+        language_pattern = 'language=\\"(.+?)\\"'
+        parts = re.split(code_pattern_outter, content, flags=re.DOTALL)
+        for i, part in enumerate(parts):
+            even = i % 2
+            if even:
+                language = "bash"
+                language_match = re.search(language_pattern, part)
+                if language_match:
+                    language = language_match.groups()[0]
+                _, cleaned_part, _ = re.split(code_pattern_inner, part, flags=re.DOTALL)
+
+                content_blocks.append(
+                    {
+                        "type": "code",
+                        "value": {"language": language, "code": cleaned_part},
+                    }
+                )
+            else:
+                content_blocks.append({"type": "paragraph", "value": part})
+        blogpost.body = json.dumps(content_blocks)
         blogpost.save()
 
         print(blogpost.id)
