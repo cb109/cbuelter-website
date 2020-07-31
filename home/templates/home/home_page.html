@@ -4,13 +4,7 @@
 
 {% block content %}
 
-<h4>
-  <a class="primary-color"
-     href="{% pageurl page %}">
-    {{ page.title }}
-  </a>
-</h4>
-
+{% include 'home/navbar.html' %}
 {% include 'home/blog_posts.html' %}
 
 {% endblock content %}

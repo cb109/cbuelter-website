@@ -1,7 +1,6 @@
 from collections import defaultdict
 
 from jsonfield import JSONField
-
 from wagtail.admin.edit_handlers import FieldPanel
 from wagtail.core.fields import RichTextField
 from wagtail.core.models import Page
@@ -13,8 +12,7 @@ class HomePage(Page):
     @property
     def blogposts(self):
         return (
-            BlogPostPage.objects
-            .child_of(self)
+            BlogPostPage.objects.child_of(self)
             .live()
             .public()
             .order_by("-first_published_at")

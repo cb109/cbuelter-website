@@ -1,7 +1,5 @@
 {% load i18n wagtailcore_tags %}
 
-{% block content %}
-
 {% for year, blogposts in page.blogposts_grouped_by_year %}
 <h1 class="blog-year-header">
   {{ year }}
@@ -20,5 +18,3 @@
   {% endfor %}
 </ul>
 {% endfor %}
-
-{% endblock %}
