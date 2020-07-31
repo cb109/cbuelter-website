@@ -4,9 +4,9 @@
 
 # Production
 dateutils
-Django>=2.1,<2.2
+Django
 jsonfield
-wagtail>=2.4,<2.5
+wagtail
 
 # Development
 ipython
