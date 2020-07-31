@@ -1,9 +1,12 @@
 from collections import defaultdict
 
 from jsonfield import JSONField
-from wagtail.admin.edit_handlers import FieldPanel
-from wagtail.core.fields import RichTextField
+from wagtail.admin.edit_handlers import StreamFieldPanel
+from wagtail.core.blocks import RichTextBlock
+from wagtail.core.fields import StreamField
 from wagtail.core.models import Page
+from wagtail.images.blocks import ImageChooserBlock
+from wagtailcodeblock.blocks import CodeBlock
 
 
 class HomePage(Page):
@@ -28,10 +31,16 @@ class HomePage(Page):
 
 
 class BlogPostPage(Page):
-    body = RichTextField()
+    body = StreamField(
+        [
+            ("paragraph", RichTextBlock()),
+            ("image", ImageChooserBlock()),
+            ("code", CodeBlock()),
+        ]
+    )
 
     content_panels = Page.content_panels + [
-        FieldPanel("body", classname="full"),
+        StreamFieldPanel("body"),
     ]
 
     _original_wp_post = JSONField()
