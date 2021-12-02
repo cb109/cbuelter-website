@@ -6,13 +6,10 @@
 #
 anyascii==0.3.0           # via wagtail
 asgiref==3.4.1            # via django
-backcall==0.2.0           # via ipython
 beautifulsoup4==4.9.3     # via wagtail
 certifi==2021.10.8        # via requests
 charset-normalizer==2.0.8  # via requests
-colorama==0.4.4           # via ipython
 dateutils==0.6.12         # via -r requirements.in
-decorator==5.1.0          # via ipython
 django-filter==21.1       # via wagtail
 django-modelcluster==5.2  # via wagtail
 django-taggit==1.5.1      # via wagtail
@@ -23,17 +20,10 @@ draftjs-exporter==2.1.7   # via wagtail
 et-xmlfile==1.1.0         # via openpyxl
 html5lib==1.1             # via wagtail
 idna==3.3                 # via requests
-ipython==7.30.1           # via -r requirements.in
-jedi==0.18.1              # via ipython
 jsonfield==3.1.0          # via -r requirements.in
 l18n==2021.3              # via wagtail
-matplotlib-inline==0.1.3  # via ipython
 openpyxl==3.0.9           # via tablib
-parso==0.8.3              # via jedi
-pickleshare==0.7.5        # via ipython
 pillow==8.4.0             # via wagtail
-prompt-toolkit==3.0.23    # via ipython
-pygments==2.10.0          # via ipython
 python-dateutil==2.8.2    # via dateutils
 pytz==2021.3              # via dateutils, django, django-modelcluster, l18n
 requests==2.26.0          # via wagtail
@@ -42,17 +32,12 @@ soupsieve==2.3.1          # via beautifulsoup4
 sqlparse==0.4.2           # via django
 tablib[xls,xlsx]==3.1.0   # via wagtail
 telepath==0.2             # via wagtail
-traitlets==5.1.1          # via ipython, matplotlib-inline
 typing-extensions==4.0.1  # via asgiref
 urllib3==1.26.7           # via requests
 wagtail==2.15.1           # via -r requirements.in, wagtailcodeblock
 wagtailcodeblock==1.25.0.2  # via -r requirements.in
-wcwidth==0.2.5            # via prompt-toolkit
 webencodings==0.5.1       # via html5lib
 willow==1.4               # via wagtail
 xlrd==2.0.1               # via tablib
 xlsxwriter==3.0.2         # via wagtail
 xlwt==1.3.0               # via tablib
-
-# The following packages are considered to be unsafe in a requirements file:
-# setuptools
