@@ -1,0 +1,20 @@
+{% load i18n wagtailcore_tags %}
+
+{% for year, blogposts in page.blogposts_grouped_by_year %}
+<h1 class="blog-year-header">
+  {{ year }}
+</h1>
+<ul class="blogposts-list">
+  {% for blogpost in blogposts %}
+  <li class="blogpost-row">
+    <div class="blogpost-date mr-4">
+      {{ blogpost.first_published_at|date }}
+    </div>
+    <a class="blogpost-link primary-color"
+       href="{% pageurl blogpost %}">
+      {{ blogpost.title }}
+    </a>
+  </li>
+  {% endfor %}
+</ul>
+{% endfor %}

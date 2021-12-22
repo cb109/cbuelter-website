@@ -1,0 +1,13 @@
+# $ pip install pip-tools
+# $ pip-compile > requirements.txt
+# $ pip-sync
+
+# Production
+dateutils
+Django
+jsonfield
+wagtail
+wagtailcodeblock
+
+# Development
+# ipython
