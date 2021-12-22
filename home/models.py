@@ -43,7 +43,7 @@ class BlogPostPage(Page):
         StreamFieldPanel("body"),
     ]
 
-    _original_wp_post = JSONField()
+    _original_wp_post = JSONField(null=True, blank=True, default=None)
     """Temporary field as we migrate from Wordpress.
 
     Holds the original Post as JSON, including all metadata.
