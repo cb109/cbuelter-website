@@ -1,0 +1,6 @@
+*.py[cod]
+__pycache__/
+db.sqlite3
+Activate.ps1
+media/
+public/
