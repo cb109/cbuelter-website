@@ -611,6 +611,10 @@ html {
   text-decoration: underline;
 }
 
+.blogpost-detail-header-date {
+  color: #cacaca;
+}
+
 @media only screen and (max-width: 960px) {
   .blog-year-header {
     text-align: start;
