@@ -1,6 +1,9 @@
 from collections import defaultdict
 
 from jsonfield import JSONField
+from readtime.utils import DEFAULT_WPM
+from readtime.utils import read_time_as_seconds
+from readtime.utils import Result
 from wagtail.admin.edit_handlers import StreamFieldPanel
 from wagtail.core.blocks import RichTextBlock
 from wagtail.core.fields import StreamField
@@ -51,3 +54,15 @@ class BlogPostPage(Page):
     TODO: Remove this field once happy with the migration.
 
     """
+
+    def get_read_time(self, wpm=DEFAULT_WPM):
+        text = " ".join(
+            [
+                str(block.value)
+                for block in self.body
+                if block.block_type in ("paragraph", "code")
+            ]
+        )
+        num_images = len([block for block in self.body if block.block_type == "image"])
+        seconds = read_time_as_seconds(text, images=num_images)
+        return Result(seconds, wpm=wpm)
