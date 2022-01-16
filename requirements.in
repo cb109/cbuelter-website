@@ -8,6 +8,7 @@ Django
 jsonfield
 wagtail
 wagtailcodeblock
+Wand  # For animated GIF support in wagtail image uploads.
 
 # Development
 # ipython
