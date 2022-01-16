@@ -15,7 +15,8 @@
   class="blogpost-detail-header-date"
   style="margin-bottom: 0.5em"
 >
-  {{ page.first_published_at|date }}
+  {{ page.first_published_at|date }},
+  {{ page.get_read_time }}
 </h2>
 <h1 style="margin-top: 0">
   {{ page.title }}
