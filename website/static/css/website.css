@@ -637,3 +637,8 @@ html {
 }
 
 /* * {outline: 1px solid red}; */
+
+/** Wagtail overrides **/
+.block-image > img {
+  height: auto;
+}
