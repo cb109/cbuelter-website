@@ -4,10 +4,10 @@ from jsonfield import JSONField
 from readtime.utils import DEFAULT_WPM
 from readtime.utils import read_time_as_seconds
 from readtime.utils import Result
-from wagtail.admin.edit_handlers import StreamFieldPanel
-from wagtail.core.blocks import RichTextBlock
-from wagtail.core.fields import StreamField
-from wagtail.core.models import Page
+from wagtail.admin.panels import FieldPanel
+from wagtail.blocks import RichTextBlock
+from wagtail.fields import StreamField
+from wagtail.models import Page
 from wagtail.images.blocks import ImageChooserBlock
 from wagtailcodeblock.blocks import CodeBlock
 
@@ -39,11 +39,12 @@ class BlogPostPage(Page):
             ("paragraph", RichTextBlock()),
             ("image", ImageChooserBlock()),
             ("code", CodeBlock()),
-        ]
+        ],
+        use_json_field=True
     )
 
     content_panels = Page.content_panels + [
-        StreamFieldPanel("body"),
+        FieldPanel("body"),
     ]
 
     _original_wp_post = JSONField(null=True, blank=True, default=None)
